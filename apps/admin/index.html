@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="nl" data-theme="day">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- A demo with fictional patients and agendas: keep it out of search results. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#F3F6FB" />
+    <meta name="description" content="Elite Smile · Praktijk — demo van het praktijkpaneel: de kliniek live in 3D, het team, de agenda en de nazorg." />
+    <title>Elite Smile · Praktijk</title>
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- The first frame already has the right ground, before the stylesheet arrives. -->
+    <style>
+      html,
+      body {
+        background: #f3f6fb;
+        margin: 0;
+      }
+      html[data-theme='night'],
+      html[data-theme='night'] body {
+        background: #060d1f;
+      }
+    </style>
+    <script>
+      // The night look from the very first paint when it was chosen before (the same key as the app).
+      try {
+        var t = new URLSearchParams(location.search).get('theme') || localStorage.getItem('smile-theme');
+        if (t === 'night') document.documentElement.dataset.theme = 'night';
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

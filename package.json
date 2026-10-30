@@ -1,0 +1,17 @@
+{
+  "name": "elite-smile-demo",
+  "private": true,
+  "workspaces": [
+    "apps/app",
+    "packages/*"
+  ],
+  "scripts": {
+    "app": "npm --workspace smile-app run start",
+    "ios": "npm --workspace smile-app run ios",
+    "web": "npm --workspace smile-app run web",
+    "admin": "npm --prefix apps/admin run dev",
+    "typecheck": "npm --workspace smile-app run typecheck && npm --prefix apps/admin run typecheck",
+    "site": "node scripts/build-site.mjs",
+    "site:serve": "node scripts/serve-site.mjs"
+  }
+}

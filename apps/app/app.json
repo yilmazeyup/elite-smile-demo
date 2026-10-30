@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Elite Smile",
+    "slug": "elite-smile-demo",
+    "scheme": "elitesmile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "nl.elitesmile.demo"
+    },
+    "android": {
+      "package": "nl.elitesmile.demo",
+      "adaptiveIcon": {
+        "backgroundColor": "#F5F8FC",
+        "foregroundImage": "./assets/icon.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "Elite Smile Dental Clinic",
+      "shortName": "Elite Smile",
+      "themeColor": "#F5F8FC",
+      "backgroundColor": "#F5F8FC"
+    },
+    "plugins": [
+      ["expo-router", { "asyncRoutes": { "web": false } }],
+      "expo-font",
+      ["expo-splash-screen", { "backgroundColor": "#F5F8FC", "image": "./assets/splash-icon.png", "imageWidth": 220 }],
+      "expo-image"
+    ]
+  }
+}

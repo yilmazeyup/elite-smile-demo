@@ -1,0 +1,61 @@
+# Builds the demo site on every push to main and publishes it on GitHub Pages:
+#   /         start page that explains the demo (site/index.html)
+#   /app/     the patient app, exported for the web (also as 404.html, so a link straight to a screen opens it)
+#   /admin/   the clinic panel with the clinic in 3D
+#   /website/ the website concept
+# See scripts/build-site.mjs.
+name: Demo site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            apps/admin/package-lock.json
+
+      - name: Install the patient app
+        run: npm ci --no-audit --no-fund
+
+      - name: Install the admin panel
+        run: npm ci --prefix apps/admin --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build the site
+        run: node scripts/build-site.mjs /elite-smile-demo
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

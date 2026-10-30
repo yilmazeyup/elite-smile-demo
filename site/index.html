@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- A demo with fictional patients: keep it out of search results. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#F3F6FB" />
+    <title>Elite Smile · demo</title>
+    <script>
+      // The language: ?lang= first, then the last choice on this device (the app, the panel and the website read the
+      // same), else Dutch. The look: ?theme= or the last choice, else light. Both set before the frames load.
+      (function () {
+        var all = ['nl', 'en', 'tr', 'ar', 'fr', 'de', 'it'];
+        var lang = 'nl';
+        var q = new URLSearchParams(location.search);
+        try {
+          var asked = q.get('lang');
+          var saved = localStorage.getItem('smile-lang');
+          lang = all.indexOf(asked) >= 0 ? asked : all.indexOf(saved) >= 0 ? saved : 'nl';
+          localStorage.setItem('smile-lang', lang);
+        } catch (e) {}
+        var root = document.documentElement;
+        root.lang = lang;
+        root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        if (lang !== 'nl') root.className += ' i18n-wait';
+        window.LANG = lang;
+        var theme = q.get('theme');
+        try {
+          if (theme === 'day' || theme === 'night') localStorage.setItem('smile-theme', theme === 'day' ? '' : theme);
+          else theme = localStorage.getItem('smile-theme');
+        } catch (e) {}
+        root.dataset.theme = theme === 'night' ? 'night' : 'day';
+      })();
+    </script>
+    <meta name="description" content="Een eigen patiëntenapp, een praktijkscherm in 3D en een nieuwe website voor Elite Smile in Eindhoven en Hoogland. Demo met fictieve patiënten." />
+    <link rel="icon" href="app/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@300..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,300..600&family=Figtree:wght@400..700&family=JetBrains+Mono:wght@400;500;600&family=Readex+Pro:wght@300..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap"
+    />
+    <style>
+      :root,[data-theme='day']{--bg:#F3F6FB;--bg2:#E8EEF7;--paper:#FFFFFF;--ink:#0B1A3A;--soft:#34446A;--muted:#7584A3;--line:rgba(11,26,58,.08);--line2:rgba(11,26,58,.16);--brand:#234282;--blue:#0A63B5;--sky:#2DB4E8;--ice:#E4F4FC;--lilac:#7D6BF0;--ok:#12A27A}
+      [data-theme='night']{--bg:#060D1F;--bg2:#0A1430;--paper:#0E1938;--ink:#EDF2FF;--soft:#B6C2DF;--muted:#7D8BAE;--line:rgba(196,212,255,.09);--line2:rgba(196,212,255,.18);--brand:#6F8BEA;--blue:#4A9BFF;--sky:#4CCBF7;--ice:rgba(76,203,247,.12);--lilac:#A99CFF;--ok:#3CD3A0}
+      *{box-sizing:border-box}
+      html,body{margin:0;background:var(--bg);color:var(--ink);transition:background .6s,color .6s}
+      body{font:16px/1.55 Figtree,'IBM Plex Sans Arabic',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+      .i18n-wait body{opacity:0}
+      a{color:inherit}
+      ::selection{background:var(--sky);color:#fff}
+      .wrap{max-width:1260px;margin:0 auto;padding:0 24px}
+      .pearl{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+      .pearl::before,.pearl::after{content:'';position:absolute;border-radius:50%;filter:blur(70px)}
+      .pearl::before{width:70vw;height:65vh;left:-22vw;top:-22vh;background:radial-gradient(closest-side,rgba(45,180,232,.30),transparent),radial-gradient(closest-side,rgba(142,124,248,.18),transparent);animation:drift 30s ease-in-out infinite alternate}
+      .pearl::after{width:80vw;height:65vh;right:-28vw;bottom:-32vh;background:radial-gradient(closest-side,rgba(23,191,163,.18),transparent);animation:drift 36s ease-in-out infinite alternate-reverse}
+      @keyframes drift{to{transform:translate3d(8vw,6vh,0) scale(1.1)}}
+      main,header,footer{position:relative;z-index:1}
+      header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0}
+      .brand img{height:34px;display:block}
+      [data-theme='night'] .brand .light,[data-theme='day'] .brand .dark{display:none}
+      .tools{display:flex;gap:8px;align-items:center}
+      select,.pill{appearance:none;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:var(--paper);color:var(--ink);font:600 14px Figtree,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+      select option{color:#0B1A3A}
+      .label{font:500 11px/1.3 'JetBrains Mono',monospace;letter-spacing:1.6px;text-transform:uppercase;color:var(--blue)}
+      .label::before{content:'[ '}.label::after{content:' ]'}
+      h1,h2,h3{font-family:Sora,'Readex Pro',system-ui,sans-serif;font-weight:600;margin:0}
+      h1{font-size:clamp(46px,6.4vw,92px);line-height:.98;letter-spacing:-.045em}
+      h2{font-size:clamp(34px,4.4vw,62px);line-height:1.02;letter-spacing:-.04em}
+      [dir='rtl'] h1,[dir='rtl'] h2{letter-spacing:0;line-height:1.2}
+      .pearl-ink{background:linear-gradient(100deg,#234282,#0A63B5 35%,#2DB4E8 65%,#8E7CF8);-webkit-background-clip:text;background-clip:text;color:transparent}
+      [data-theme='night'] .pearl-ink{background-image:linear-gradient(100deg,#DCE6FF,#7FC9FF 45%,#B7A8FF)}
+      .serif{font:italic 400 clamp(19px,1.8vw,24px)/1.4 Newsreader,Georgia,serif;color:var(--soft)}
+      .hero{display:grid;grid-template-columns:1.12fr .88fr;gap:44px;align-items:center;padding:24px 0 70px}
+      .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+      .btn{height:54px;padding:0 24px;border-radius:999px;display:inline-flex;align-items:center;gap:10px;font:700 15.5px Figtree,sans-serif;text-decoration:none;border:0;cursor:pointer;transition:transform .3s cubic-bezier(.2,.9,.25,1.15)}
+      .btn:hover{transform:translateY(-2px)}
+      .btn.navy{background:linear-gradient(140deg,#16306F,#0B1A3A);color:#fff;box-shadow:0 14px 34px -16px rgba(11,26,58,.7)}
+      .btn.blue{background:linear-gradient(120deg,#0A63B5,#2DB4E8);color:#fff;box-shadow:0 14px 34px -16px rgba(10,99,181,.7)}
+      .btn.line{background:var(--paper);color:var(--ink);border:1px solid var(--line2)}
+      .facts{display:flex;gap:30px;margin-top:36px;flex-wrap:wrap}
+      .facts div{display:flex;flex-direction:column}
+      .facts b{font:600 36px/1 Sora,sans-serif;letter-spacing:-.04em}
+      .facts span{font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+      .phone{position:relative;width:min(390px,100%);aspect-ratio:390/820;margin:0 auto;border-radius:56px;padding:12px;background:#0B1A3A;box-shadow:0 50px 100px -40px rgba(11,26,58,.55),0 0 0 1px rgba(45,180,232,.25),0 0 90px -20px rgba(45,180,232,.45)}
+      .phone .screen{position:relative;width:100%;height:100%;border-radius:44px;overflow:hidden;background:#F3F6FB}
+      .phone iframe{position:absolute;left:0;top:0;width:390px;border:0;transform-origin:0 0}
+      section{padding:72px 0}
+      .groups{display:grid;gap:34px;margin-top:36px}
+      .group h3{font:500 11px 'JetBrains Mono',monospace;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+      .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+      .feature{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:8px;padding:20px;border-radius:24px;background:var(--paper);border:1px solid var(--line);box-shadow:0 4px 18px -8px rgba(11,26,58,.12);transition:transform .35s cubic-bezier(.2,.9,.25,1.15),border-color .3s,box-shadow .3s}
+      .feature:hover{transform:translateY(-4px);border-color:var(--sky);box-shadow:0 18px 40px -20px rgba(10,99,181,.45)}
+      .feature:focus-visible{outline:2px solid var(--sky);outline-offset:3px}
+      .feature .no{font:600 13px/1 'JetBrains Mono',monospace;color:var(--blue)}
+      .feature h4{margin:4px 0 0;font:600 19px/1.15 Sora,'Readex Pro',sans-serif;letter-spacing:-.02em}
+      .feature p{margin:0;font-size:14.5px;color:var(--soft)}
+      .feature .award{font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.6px;color:var(--lilac)}
+      .feature .go{margin-top:auto;font:700 13px Figtree,sans-serif;color:var(--blue)}
+      .feature.hot{background:linear-gradient(140deg,#16306F,#0B1A3A);border:0;color:#fff}
+      .feature.hot p{color:#B6C2DF}.feature.hot .no,.feature.hot .go{color:#7FC9F2}.feature.hot .award{color:#B7A8FF}
+      .frame{margin-top:30px;border-radius:24px;overflow:hidden;border:1px solid var(--line2);background:#0B1A3A;box-shadow:0 50px 100px -50px rgba(11,26,58,.55)}
+      .frame .bar{display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06)}
+      .frame .bar i{width:11px;height:11px;border-radius:50%;background:#26365e}
+      .frame .bar span{margin-inline-start:10px;font:500 12px 'JetBrains Mono',monospace;color:#7D8BAE}
+      .frame .bar a{margin-inline-start:auto;font:600 12px Figtree,sans-serif;color:#7FC9F2;text-decoration:none}
+      .view{position:relative;width:100%;aspect-ratio:1440/900;overflow:hidden;background:#F3F6FB}
+      .view iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0}
+      .bullets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+      .bullets div{padding:18px;border-radius:20px;background:var(--paper);border:1px solid var(--line)}
+      .bullets b{display:block;font:600 16px Sora,sans-serif;margin-bottom:4px}
+      .bullets span{color:var(--soft);font-size:14.5px}
+      .two{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+      .steps{display:grid;gap:12px;margin-top:24px}
+      .step{display:flex;gap:16px;padding:18px;border-radius:20px;background:var(--paper);border:1px solid var(--line)}
+      .step b{font:600 28px/1 Sora,sans-serif;color:var(--blue);min-width:30px}
+      table{width:100%;border-collapse:separate;border-spacing:0;margin-top:28px;background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;font-size:14.5px}
+      th,td{text-align:start;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+      th{font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);background:var(--bg2)}
+      td:first-child{font:600 15px Sora,sans-serif}
+      td small{display:block;font:500 11px 'JetBrains Mono',monospace;color:var(--muted);margin-top:4px}
+      tr:last-child td{border-bottom:0}
+      .honest{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
+      .honest div{padding:24px;border-radius:24px;background:var(--paper);border:1px solid var(--line)}
+      .honest h3{margin:0 0 10px;font:600 24px Sora,sans-serif}
+      .honest p{margin:0;color:var(--soft)}
+      .video{display:none;margin-top:18px}
+      footer{padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+      @media (max-width:1060px){.grid{grid-template-columns:repeat(3,1fr)}}
+      @media (max-width:980px){.hero,.two{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.honest,.bullets{grid-template-columns:1fr}.table-wrap{overflow-x:auto}}
+      @media (max-width:560px){.grid{grid-template-columns:1fr}.brand img{height:26px}select,.pill{height:36px;padding:0 12px;font-size:13px}.facts{gap:20px}}
+      @media (prefers-reduced-motion:reduce){.pearl::before,.pearl::after{animation:none}}
+    </style>
+  </head>
+  <body>
+    <div class="pearl"></div>
+    <div class="wrap">
+      <header>
+        <a class="brand" href="./" translate="no" aria-label="Elite Smile"><img class="light" src="brand/logo-light.png" alt="Elite Smile" /><img class="dark" src="brand/logo-dark.png" alt="Elite Smile" /></a>
+        <div class="tools">
+          <button class="pill" id="theme" type="button" aria-label="Licht of nacht"></button>
+          <select id="lang" aria-label="Taal" translate="no">
+            <option value="nl">Nederlands</option>
+            <option value="en">English</option>
+            <option value="tr">Türkçe</option>
+            <option value="ar">العربية</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+          </select>
+        </div>
+      </header>
+      <main>
+        <div class="hero">
+          <div>
+            <div class="label">Demo voor Elite Smile · Eindhoven en Hoogland</div>
+            <h1 style="margin-top: 18px">Een eigen app.<br /><span class="pearl-ink">Een kliniek die leeft.</span></h1>
+            <p class="serif" style="max-width: 580px; margin-top: 22px">Afspraken, alles voor en na de behandeling, je gebit in 3D en een pauzeknop in de stoel. Met de echte praktijken, behandelingen en tandartsen van Elite Smile.</p>
+            <div class="cta">
+              <a class="btn navy" href="app/">Open de app</a>
+              <a class="btn blue" href="admin/">Open het praktijkscherm</a>
+              <a class="btn line" href="website/">Open de website</a>
+            </div>
+            <div class="video" id="video"><a class="btn line" href="hulp/">Bekijk de uitlegvideo</a></div>
+            <div class="facts">
+              <div><b>30</b><span>nieuwe functies</span></div>
+              <div><b>6</b><span>tandartsen in 3D</span></div>
+              <div><b>28</b><span>behandelingen</span></div>
+              <div><b>7</b><span>talen</span></div>
+            </div>
+          </div>
+          <div class="phone" id="phone"><div class="screen"><iframe id="app-frame" title="De app van Elite Smile" src="app/"></iframe></div></div>
+        </div>
+
+        <section>
+          <div class="label">Dertig functies</div>
+          <h2 style="margin-top: 12px">Van de afspraak tot de nazorg.<br /><span class="pearl-ink">Tik er een aan.</span></h2>
+          <p class="serif" style="max-width: 640px; margin-top: 16px">Hij opent in de telefoon hierboven. Tien ideeën komen van de tien meest bekroonde websites van 2026.</p>
+          <div class="groups" id="features"></div>
+        </section>
+
+        <section>
+          <div class="label">Het praktijkscherm</div>
+          <h2 style="margin-top: 12px">De kliniek in 3D, live.</h2>
+          <p class="serif" style="max-width: 760px; margin-top: 16px">De zes behandelkamers, de wachtkamer, de balie, röntgen en sterilisatie. De tandartsen staan erin als 3D-figuren met hun eigen gezicht; tik er een aan voor het rooster, hoe vol de dag is, hun gegevens en een eigen pagina om te delen.</p>
+          <div class="frame">
+            <div class="bar"><i></i><i></i><i></i><span>Elite Smile · Praktijk</span><a href="admin/" id="admin-link">Open ↗</a></div>
+            <div class="view" id="admin-view"><iframe id="admin-frame" title="Het praktijkscherm" src="admin/" tabindex="-1"></iframe></div>
+          </div>
+          <div class="bullets">
+            <div><b>Tandartsen als 3D-figuren</b><span>Met een ruit boven hun hoofd die laat zien hoe druk ze zijn, zoals in The Sims.</span></div>
+            <div><b>Alles uit de app, meteen</b><span>Boekingen, inchecken, een pauzeverzoek, pijn na een ingreep, een foto van de wond.</span></div>
+            <div><b>Agenda, nazorg, sterilisatie</b><span>Wie in welke kamer zit, wie na een ingreep extra aandacht nodig heeft, en welke instrumenten waar gebruikt zijn.</span></div>
+          </div>
+        </section>
+
+        <section>
+          <div class="label">De website</div>
+          <h2 style="margin-top: 12px">Elitesmile.nl, opnieuw ontworpen.</h2>
+          <p class="serif" style="max-width: 720px; margin-top: 16px">In zeven talen, met elke tandarts een eigen pagina, en tien ideeën van de tien meest bekroonde sites van 2026.</p>
+          <div class="frame">
+            <div class="bar"><i></i><i></i><i></i><span>elitesmile.nl</span><a href="website/" id="web-link">Open ↗</a></div>
+            <div class="view" id="web-view"><iframe id="web-frame" title="De website" src="website/" tabindex="-1"></iframe></div>
+          </div>
+        </section>
+
+        <section class="two">
+          <div>
+            <div class="label">Samen live</div>
+            <h2 style="margin-top: 12px">Tik in de app.<br /><span class="pearl-ink">Zie het in de kliniek.</span></h2>
+          </div>
+          <div class="steps">
+            <div class="step"><b>1</b><div>Boek in de app een gratis controle. Op het praktijkscherm staat hij meteen in de agenda.</div></div>
+            <div class="step"><b>2</b><div>Check in met de schuif: je verschijnt in de wachtkamer in 3D, en loopt naar je kamer als je wordt geroepen.</div></div>
+            <div class="step"><b>3</b><div>Vraag in de stoel om pauze: de kamer licht op bij de tandarts, die met één tik laat weten dat hij het ziet.</div></div>
+            <div class="step"><b>4</b><div>Thuis: vul je pijndagboek in of stuur een foto van de wond. De tandarts antwoordt vanaf het scherm.</div></div>
+          </div>
+        </section>
+
+        <section>
+          <div class="label">Geleend van de besten</div>
+          <h2 style="margin-top: 12px">De tien meest bekroonde sites van 2026.</h2>
+          <p class="serif" style="max-width: 720px; margin-top: 16px">De Sites of the Month van Awwwards van januari tot en met september 2026, en de Site of the Year. Van elk één idee voor de app en een ander voor de website.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Site</th><th>In de app</th><th>Op de website</th></tr></thead>
+              <tbody id="awards"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <div class="label">Echt en demo</div>
+          <h2 style="margin-top: 12px">Wat klopt, en wat is verzonnen.</h2>
+          <div class="honest">
+            <div>
+              <h3>Echt</h3>
+              <p>Van elitesmile.nl: de twee praktijken met adres en openingsdagen, telefoon en WhatsApp, e-mail, Instagram, de zeven specialismen en alle behandelingen, de vragen en antwoorden, de gratis controle, en de zes tandartsen met hun naam, titel en foto.</p>
+            </div>
+            <div>
+              <h3>Demo</h3>
+              <p>Layla en haar gezin, alle andere patiënten, de agenda en de kamers, de assistenten en de balie, de bedragen, het voorschrift, het gebit en de röntgenfoto, en de kliniek in 3D. De zorgteksten zijn algemene informatie; de tandartsen van Elite Smile zouden ze controleren.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>Elite Smile Dental Clinic · Alard du Hamelstraat 33, Eindhoven · Engweg 17, Hoogland · demo door Anka Enterprises</footer>
+    </div>
+    <script>
+      const FEATURES = [
+        { group: 'Afspraken', items: [
+          { no: 1, title: 'Afspraak in zes vragen', line: 'Voor wie, wat, waar, bij wie en wanneer. De gratis controle eerst.', path: '/afspraak', award: 'Lama Lama', hot: true },
+          { no: 2, title: 'Dichtstbijzijnde kliniek', line: 'Vul je postcode in: Eindhoven of Hoogland, met afstand en openingsdagen.', path: '/kliniek' },
+          { no: 3, title: 'Eerder terecht', line: 'Op de wachtlijst: valt er een plek vrij, dan biedt de kliniek hem met één tik aan.', path: '/afspraken' },
+          { no: 4, title: 'Gezinsplanner', line: 'Moeder en zoon achter elkaar, één keer reizen. Elke afspraak in je agenda.', path: '/afspraken' },
+          { no: 5, title: 'Controle-ritme', line: 'Elk half jaar, zoals Elite Smile aanraadt, met wat je verzekering dit jaar nog vergoedt.', path: '/afspraken' },
+        ] },
+        { group: 'Voor de behandeling', items: [
+          { no: 6, title: 'Gezondheidsvragenlijst', line: 'Bloedverdunners, allergieën, zwangerschap: één keer invullen, daarna met één tik bevestigen.', path: '/vragenlijst' },
+          { no: 7, title: 'Voorbereiding op maat', line: 'Wat je wanneer doet, per afspraak: van stoppen met roken tot wat je meeneemt.', path: '/voorbereiding/up-hechting' },
+          { no: 8, title: 'Behandeling in 3D', line: 'Een implantaat uit elkaar als een horloge. Sleep en hij wordt een tekening.', path: '/uitleg/implantaat', award: 'GQ & AP · Floema', hot: true },
+          { no: 9, title: 'Toestemming tekenen', line: 'Wat, waarom, de alternatieven en de risico’s. Daarna teken je met je vinger.', path: '/toestemming/implantaat' },
+          { no: 10, title: 'Begroting & vergoeding', line: 'Wat het kost, wat je verzekering betaalt en wat je zelf betaalt.', path: '/begroting' },
+          { no: 11, title: 'Rustig-modus', line: 'Houd vast om in te ademen, laat los om uit te ademen. Je tandarts ziet hoe spannend je het vindt.', path: '/rustig', award: 'Why Zero' },
+        ] },
+        { group: 'In de kliniek', items: [
+          { no: 12, title: 'Inchecken met een schuif', line: 'Schuif bij de deur: de balie weet dat je er bent, jij ziet je kamer.', path: '/inchecken', award: 'Son Daven' },
+          { no: 13, title: 'Live in de wachtkamer', line: 'Wie op je wacht, ziet bij welke stap de tandarts is.', path: '/inchecken' },
+          { no: 14, title: 'Pauzeknop', line: 'Even stoppen? De kamer licht op bij de tandarts.', path: '/stoel', hot: true },
+          { no: 15, title: 'Tolk in de stoel', line: 'Kant-en-klare zinnen in jouw taal, met het Nederlands omgedraaid voor de tandarts.', path: '/stoel?tab=tolk' },
+        ] },
+        { group: 'Na de behandeling', items: [
+          { no: 16, title: 'Nazorg om te luisteren', line: 'Uur voor uur, of als gesprek tussen tandarts en assistent, met ondertiteling.', path: '/nazorg', award: 'GQ & AP' },
+          { no: 17, title: 'Verdovingstimer', line: 'Tot het gevoel terug is: niets heets, niet op je lip bijten.', path: '/verdoving' },
+          { no: 18, title: 'Pijndagboek', line: 'Neemt de pijn na dag 3 weer toe, dan zegt de app: bel. De kliniek ziet het ook.', path: '/dagboek' },
+          { no: 19, title: 'Medicijnwekker', line: 'Het voorschrift als schema, met een rem op het dagmaximum.', path: '/medicijnen' },
+          { no: 20, title: 'Foto van de wond', line: 'De tandarts kijkt mee vanaf het praktijkscherm en antwoordt.', path: '/foto' },
+          { no: 21, title: 'Wat mag ik eten?', line: 'Per fase na de ingreep: wat wel, wat niet, en waarom lauw.', path: '/eten' },
+          { no: 22, title: 'Pijn of spoed', line: 'Eerst de vragen die niet kunnen wachten, dan eerste hulp en wie je belt.', path: '/spoed' },
+        ] },
+        { group: 'Mijn gebit', items: [
+          { no: 23, title: 'Mijn gebit in 3D', line: 'Elke tand met zijn verhaal, en je mond als plattegrond.', path: '/gebit', award: 'ERA Residence', hot: true },
+          { no: 24, title: 'Röntgen met uitleg', line: 'Inzoomen, contrast, en de notities van je tandarts erbij.', path: '/rontgen' },
+          { no: 25, title: 'Implantaatpaspoort', line: 'Maat, materiaal en datum, voor elke volgende tandarts.', path: '/paspoort', award: 'Floema' },
+          { no: 26, title: 'Glimlach-studio', line: 'Zie je tanden lichter op je eigen foto, met de kleurwaaier van de tandarts.', path: '/glimlach' },
+          { no: 27, title: 'Mondgezondheid', line: 'Je score, en zoom in tot op het glazuur. Blijf hangen en de bacteriën komen.', path: '/score', award: 'Oryzo AI' },
+        ] },
+        { group: 'Gezin en elke dag', items: [
+          { no: 28, title: 'Poetscoach', line: 'Twee minuten, vier kwadranten in 3D, en prijzen die nieuwe tandenborstels geven.', path: '/poetsen', award: 'Bruno Simon' },
+          { no: 29, title: 'Beugelbuddy', line: 'Elk bezoek een kaart met de elastiekjes van toen, die je in 3D rond kunt draaien.', path: '/beugel', award: 'Lando Norris' },
+          { no: 30, title: 'Kinderhoek', line: 'Het eerste bezoek als verhaal, stickers, de tandenfee, en een gouden sleutel.', path: '/kinderhoek', award: 'The Renaissance Edition' },
+        ] },
+      ];
+      const AWARDS = [
+        { site: 'Bruno Simon', when: 'Site of the Month januari 2026', app: 'Poetsprijzen die nieuwe tandenborstels geven', web: 'Een koekjespot als cookiemelding, met weigeren even groot' },
+        { site: 'The Renaissance Edition', when: 'Shopify · februari 2026', app: 'Een gouden sleutel in de Kinderhoek: tekenen op je eigen tand', web: 'De specialismen als geschilderde taferelen, met penseelstreken ertussen' },
+        { site: 'GQ & AP The Extraordinary Lab', when: 'maart 2026', app: 'Nazorg als gesprek; scrollen pauzeert in plaats van versnellen', web: 'Een kroon live op zwart glas in het lab' },
+        { site: 'Oryzo AI', when: 'Lusion · april 2026', app: 'Inzoomen tot op het glazuur, tot de bacteriën komen', web: 'Een modelkaart per behandeling, met een 3D-bestand om te downloaden' },
+        { site: 'Floema', when: 'mei 2026', app: 'Slepen maakt van het implantaat een technische tekening', web: 'Een catalogus van 3D-modellen voor je consult' },
+        { site: 'Son Daven', when: 'juni 2026', app: 'Inchecken met een schuif', web: 'Een getekende kaart per praktijk, met fiets- en loopminuten' },
+        { site: 'Lama Lama', when: 'juli 2026', app: 'Eén vraag per scherm; de knop wordt de tijd en de kamer', web: 'Labels tussen haken, knoppen die letters husselen, een formulier in stappen' },
+        { site: 'ERA Residence', when: 'augustus 2026', app: 'Je mond als plattegrond, elke tand een kavel', web: 'Behandelkaarten met vaste velden die meteen boeken' },
+        { site: 'Why Zero', when: 'september 2026', app: 'Vasthouden om in te ademen', web: 'Een welkomstcertificaat dat openvouwt als origami' },
+        { site: 'Lando Norris', when: 'Site of the Year 2025', app: 'Een hall of fame van beugelbezoeken', web: 'Een glimlach waaronder je met de muis de röntgenlaag ziet' },
+      ];
+      const LANG = window.LANG || 'nl';
+      const withLang = (href) => (LANG === 'nl' ? href : href + (href.includes('?') ? '&' : '?') + 'lang=' + LANG);
+      const menu = document.getElementById('lang');
+      menu.value = LANG;
+      menu.addEventListener('change', () => {
+        const url = new URL(location.href);
+        url.searchParams.set('lang', menu.value);
+        location.replace(url.toString());
+      });
+      const themeButton = document.getElementById('theme');
+      const night = document.documentElement.dataset.theme === 'night';
+      themeButton.innerHTML = night
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></svg>';
+      themeButton.addEventListener('click', () => {
+        try {
+          if (night) localStorage.removeItem('smile-theme');
+          else localStorage.setItem('smile-theme', 'night');
+        } catch (e) {}
+        location.reload();
+      });
+      for (const a of document.querySelectorAll('a[href^="app/"], a[href^="admin/"], a[href^="website/"], a[href^="hulp/"]')) a.setAttribute('href', withLang(a.getAttribute('href')));
+      const appFrame = document.getElementById('app-frame');
+      appFrame.src = withLang('app/');
+      document.getElementById('admin-frame').src = withLang('admin/');
+      document.getElementById('web-frame').src = withLang('website/');
+      const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+      const groups = document.getElementById('features');
+      for (const g of FEATURES) {
+        const box = document.createElement('div');
+        box.className = 'group';
+        box.innerHTML = '<h3>' + esc(g.group) + '</h3><div class="grid"></div>';
+        const grid = box.querySelector('.grid');
+        for (const f of g.items) {
+          const b = document.createElement('button');
+          b.className = 'feature' + (f.hot ? ' hot' : '');
+          b.innerHTML =
+            '<span class="no">' + String(f.no).padStart(2, '0') + '</span><h4>' + esc(f.title) + '</h4><p>' + esc(f.line) + '</p>' +
+            (f.award ? '<span class="award" translate="no">✦ ' + esc(f.award) + '</span>' : '') +
+            '<span class="go">Bekijk in de app →</span>';
+          b.addEventListener('click', () => {
+            appFrame.src = withLang('app' + f.path + (f.path.includes('?') ? '&' : '?') + 'intro=0');
+            document.getElementById('phone').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+          grid.appendChild(b);
+        }
+        groups.appendChild(box);
+      }
+      const awards = document.getElementById('awards');
+      for (const a of AWARDS) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td><span translate="no">' + esc(a.site) + '</span><small>' + esc(a.when) + '</small></td><td>' + esc(a.app) + '</td><td>' + esc(a.web) + '</td>';
+        awards.appendChild(tr);
+      }
+      // The explainer video shows up once it has been made.
+      fetch('hulp/', { method: 'HEAD' })
+        .then((r) => {
+          if (r.ok) document.getElementById('video').style.display = 'block';
+        })
+        .catch(() => {});
+      // Scale the app to the phone and the panel and the site to their windows.
+      const fit = () => {
+        const screen = appFrame.parentElement;
+        const k = screen.clientWidth / 390;
+        appFrame.style.transform = 'scale(' + k + ')';
+        appFrame.style.height = screen.clientHeight / k + 'px';
+        for (const id of ['admin', 'web']) {
+          const view = document.getElementById(id + '-view');
+          document.getElementById(id + '-frame').style.transform = 'scale(' + view.clientWidth / 1440 + ')';
+        }
+      };
+      addEventListener('resize', fit);
+      fit();
+      // Dutch is written in the page; another language looks each text up in the same dictionary as the app and the
+      // panel (i18n/<lang>.json), with {placeholders} for names and numbers and " · " parts looked up one by one.
+      function translator(dict) {
+        const own = (k) => Object.prototype.hasOwnProperty.call(dict, k);
+        const folded = new Map(Object.keys(dict).filter((k) => !k.includes('{')).map((k) => [k.toLowerCase(), k]));
+        const escape = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const patterns = Object.keys(dict)
+          .filter((k) => k.includes('{'))
+          .map((k) => {
+            const parts = k.split(/\{(\w+)\}/);
+            const literal = parts.filter((_, i) => i % 2 === 0).join('');
+            if (!/\p{L}/u.test(literal)) return null;
+            const re = new RegExp('^' + parts.map((p, i) => (i % 2 ? '(.+?)' : escape(p))).join('') + '$', 's');
+            return { k, re, names: parts.filter((_, i) => i % 2), weight: literal.length };
+          })
+          .filter(Boolean)
+          .sort((a, b) => b.weight - a.weight);
+        const look = (text, depth) => {
+          const core = text.trim();
+          if (!core || !/\p{L}/u.test(core)) return null;
+          const wrap = (t) => text.replace(core, () => t);
+          if (own(core)) return wrap(dict[core]);
+          const f = folded.get(core.toLowerCase());
+          if (f) return wrap(dict[f]);
+          const punct = /^(.*?\p{L}.*?)([,.:;!?…→↗]+)$/u.exec(core);
+          if (punct && own(punct[1].trim())) return wrap(dict[punct[1].trim()] + ' ' + punct[2]);
+          if (depth > 3) return null;
+          for (const p of patterns) {
+            const m = p.re.exec(core);
+            if (!m) continue;
+            const values = {};
+            p.names.forEach((n, i) => (values[n] = look(m[i + 1], depth + 1) ?? m[i + 1]));
+            return wrap(dict[p.k].replace(/\{(\w+)\}/g, (x, n) => values[n] ?? x));
+          }
+          for (const sep of [' · ', ' — ', ' – ', ': ']) {
+            if (!core.includes(sep)) continue;
+            let changed = false;
+            const out = core.split(sep).map((part) => {
+              const t = look(part, depth + 1);
+              if (t != null) changed = true;
+              return t ?? part;
+            });
+            if (changed) return wrap(out.join(sep));
+          }
+          return null;
+        };
+        return (text) => look(text, 0) ?? text;
+      }
+      function translatePage(dict) {
+        const t = translator(dict);
+        const skip = 'script, style, [translate="no"]';
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+          acceptNode: (n) => (n.parentElement && !n.parentElement.closest(skip) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT),
+        });
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        for (const n of nodes) {
+          if (!/\p{L}/u.test(n.nodeValue)) continue;
+          const text = n.nodeValue.replace(/\s+/g, ' ');
+          const out = t(text);
+          if (out !== text) n.nodeValue = out;
+        }
+        for (const el of document.querySelectorAll('[title], [alt], [aria-label]')) {
+          for (const name of ['title', 'alt', 'aria-label']) {
+            const v = el.getAttribute(name);
+            if (v && !el.closest('[translate="no"]')) el.setAttribute(name, t(v));
+          }
+        }
+        document.title = t(document.title);
+      }
+      const shown = () => document.documentElement.classList.remove('i18n-wait');
+      if (LANG !== 'nl') {
+        setTimeout(shown, 2500);
+        fetch('i18n/' + LANG + '.json')
+          .then((r) => r.json())
+          .then(translatePage)
+          .catch(() => {})
+          .finally(shown);
+      }
+    </script>
+  </body>
+</html>

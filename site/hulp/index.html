@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#F3F6FB" />
+    <title>Elite Smile · Uitlegvideo</title>
+    <link rel="icon" href="../brand/favicon.png" />
+    <script>
+      (function () {
+        var all = ['nl', 'en', 'tr', 'ar', 'fr', 'de', 'it'];
+        var lang = 'nl';
+        try {
+          var asked = new URLSearchParams(location.search).get('lang');
+          var saved = localStorage.getItem('smile-lang');
+          lang = all.indexOf(asked) >= 0 ? asked : all.indexOf(saved) >= 0 ? saved : 'nl';
+          localStorage.setItem('smile-lang', lang);
+        } catch (e) {}
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        window.LANG = lang;
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400..700&family=Newsreader:ital,opsz,wght@1,6..72,400&family=Figtree:wght@400..700&family=JetBrains+Mono:wght@500&family=Readex+Pro:wght@400..700&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" />
+    <style>
+      :root{--bg:#F3F6FB;--bg2:#E8EEF7;--paper:#fff;--ink:#0B1A3A;--soft:#34446A;--muted:#7584A3;--line:rgba(11,26,58,.08);--line2:rgba(11,26,58,.16);--blue:#0A63B5;--sky:#2DB4E8}
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 Figtree,'IBM Plex Sans Arabic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+      .pearl{position:fixed;inset:0;pointer-events:none;z-index:0}
+      .pearl::before{content:'';position:absolute;width:70vw;height:60vh;left:-20vw;top:-20vh;border-radius:50%;filter:blur(70px);background:radial-gradient(closest-side,rgba(45,180,232,.28),transparent)}
+      .wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:22px 24px 64px}
+      header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+      header img{height:30px;display:block}
+      .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+      .back,select{height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:var(--paper);color:var(--ink);font:600 14px Figtree,sans-serif;text-decoration:none;display:inline-flex;align-items:center}
+      .label{font:500 11px 'JetBrains Mono',monospace;letter-spacing:1.6px;text-transform:uppercase;color:var(--blue)}
+      .label::before{content:'[ '}.label::after{content:' ]'}
+      h1{margin:16px 0 12px;font:600 clamp(40px,6vw,76px)/1 Sora,'Readex Pro',sans-serif;letter-spacing:-.045em}
+      [dir='rtl'] h1{letter-spacing:0;line-height:1.2}
+      .lead{margin:0;max-width:680px;font:italic 400 21px/1.45 Newsreader,Georgia,serif;color:var(--soft)}
+      .intro{padding:44px 0 30px}
+      .player{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
+      .video{border-radius:26px;overflow:hidden;background:#0B1A3A;box-shadow:0 40px 90px -46px rgba(11,26,58,.6),0 0 0 1px var(--line)}
+      video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#F3F6FB}
+      video::cue{font:500 20px Figtree,'IBM Plex Sans Arabic',sans-serif;background:rgba(11,26,58,.78);color:#fff}
+      .chapters{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px 12px 14px}
+      .chapters h2{margin:0 10px 10px;font:600 22px Sora,'Readex Pro',sans-serif}
+      .chapters ol{list-style:none;margin:0;padding:0}
+      .chapters button{display:flex;align-items:center;gap:12px;width:100%;padding:10px;border:0;border-radius:14px;background:transparent;font:500 15.5px Figtree,'IBM Plex Sans Arabic',sans-serif;color:var(--ink);text-align:start;cursor:pointer}
+      .chapters button:hover,.chapters button.on{background:var(--bg2)}
+      .chapters time{font:500 12px 'JetBrains Mono',monospace;color:var(--muted);min-width:38px}
+      .chapters button.on time{color:var(--blue)}
+      .faq{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+      .faq div{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px}
+      .faq h3{margin:0 0 6px;font:600 17px Sora,'Readex Pro',sans-serif}
+      .faq p{margin:0;color:var(--soft);font-size:15.5px}
+      footer{margin-top:40px;color:var(--muted);font-size:14px}
+      @media (max-width:900px){.player,.faq{grid-template-columns:1fr}}
+    </style>
+  </head>
+  <body>
+    <div class="pearl"></div>
+    <div class="wrap">
+      <header>
+        <a href="../" translate="no"><img src="../brand/logo-light.png" alt="Elite Smile" /></a>
+        <div class="actions">
+          <a class="back" href="../" id="back">← Terug naar de demo</a>
+          <select id="lang" aria-label="Ondertitels" translate="no">
+            <option value="nl">Nederlands</option>
+            <option value="en">English</option>
+            <option value="tr">Türkçe</option>
+            <option value="ar">العربية</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+          </select>
+        </div>
+      </header>
+      <div class="intro">
+        <div class="label" id="kicker">Uitlegvideo · 3 minuten</div>
+        <h1 id="title">Elite Smile in drie minuten</h1>
+        <p class="lead" id="lead">De app voor patiënten, het praktijkscherm in 3D en de nieuwe website: wat ze doen en hoe ze samenwerken. In het Nederlands, met ondertitels in zeven talen.</p>
+      </div>
+      <div class="player">
+        <div class="video">
+          <video id="video" controls playsinline preload="metadata" poster="poster.jpg">
+            <source src="elite-smile-uitleg.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <nav class="chapters" aria-label="Hoofdstukken">
+          <h2 id="chapters-title">Hoofdstukken</h2>
+          <ol id="chapters"></ol>
+        </nav>
+      </div>
+      <section class="faq" id="faq"></section>
+      <footer>Elite Smile Dental Clinic · demo met fictieve patiënten</footer>
+    </div>
+    <script>
+      // The page's own words in seven languages; the chapters' titles come from chapters.json, the subtitles from the .vtt files.
+      const T = {
+        nl: { kicker: 'Uitlegvideo · 3 minuten', title: 'Elite Smile in drie minuten', lead: 'De app voor patiënten, het praktijkscherm in 3D en de nieuwe website: wat ze doen en hoe ze samenwerken. In het Nederlands, met ondertitels in zeven talen.', back: '← Terug naar de demo', chapters: 'Hoofdstukken' },
+        en: { kicker: 'Explainer video · 3 minutes', title: 'Elite Smile in three minutes', lead: 'The patient app, the clinic panel in 3D and the new website: what they do and how they work together. In Dutch, with subtitles in seven languages.', back: '← Back to the demo', chapters: 'Chapters' },
+        tr: { kicker: 'Tanıtım videosu · 3 dakika', title: 'Üç dakikada Elite Smile', lead: 'Hasta uygulaması, 3D klinik ekranı ve yeni web sitesi: ne yaptıkları ve birlikte nasıl çalıştıkları. Hollandaca, yedi dilde altyazılı.', back: '← Demoya dön', chapters: 'Bölümler' },
+        ar: { kicker: 'فيديو تعريفي · 3 دقائق', title: 'Elite Smile في ثلاث دقائق', lead: 'تطبيق المرضى، وشاشة العيادة ثلاثية الأبعاد، والموقع الجديد: ماذا تفعل وكيف تعمل معًا. باللغة الهولندية مع ترجمة بسبع لغات.', back: '→ العودة إلى العرض', chapters: 'الفصول' },
+        fr: { kicker: 'Vidéo explicative · 3 minutes', title: 'Elite Smile en trois minutes', lead: 'L’application patient, l’écran du cabinet en 3D et le nouveau site : ce qu’ils font et comment ils travaillent ensemble. En néerlandais, sous-titré en sept langues.', back: '← Retour à la démo', chapters: 'Chapitres' },
+        de: { kicker: 'Erklärvideo · 3 Minuten', title: 'Elite Smile in drei Minuten', lead: 'Die Patienten-App, der Praxisbildschirm in 3D und die neue Website: was sie können und wie sie zusammenarbeiten. Auf Niederländisch, mit Untertiteln in sieben Sprachen.', back: '← Zurück zur Demo', chapters: 'Kapitel' },
+        it: { kicker: 'Video esplicativo · 3 minuti', title: 'Elite Smile in tre minuti', lead: 'L’app per i pazienti, lo schermo dello studio in 3D e il nuovo sito: cosa fanno e come lavorano insieme. In olandese, con sottotitoli in sette lingue.', back: '← Torna alla demo', chapters: 'Capitoli' },
+      };
+      const FAQ = {
+        nl: [['Is dit de echte app van Elite Smile?', 'Nee, een demo. De praktijken, behandelingen en tandartsen komen van elitesmile.nl; de patiënten en de agenda zijn verzonnen.'], ['Werkt het op elke telefoon?', 'Ja: in de browser van iPhone en Android, en als app in de stores als Elite Smile dat wil.'], ['Gaan gegevens ergens naartoe?', 'In de demo niet: alles blijft in je eigen browser. Een echte versie koppelt veilig aan het praktijksysteem.'], ['Welke talen?', 'Nederlands, Engels, Turks, Arabisch, Frans, Duits en Italiaans, overal in de app, het praktijkscherm en de website.']],
+        tr: [['Bu Elite Smile’ın gerçek uygulaması mı?', 'Hayır, bir demo. Muayenehaneler, tedaviler ve diş hekimleri elitesmile.nl’den; hastalar ve randevu takvimi uydurma.'], ['Her telefonda çalışır mı?', 'Evet: iPhone ve Android tarayıcısında; Elite Smile isterse mağazalarda uygulama olarak da.'], ['Veriler bir yere gidiyor mu?', 'Demoda hayır: her şey kendi tarayıcında kalır. Gerçek sürüm muayenehane sistemine güvenli şekilde bağlanır.'], ['Hangi diller?', 'Hollandaca, İngilizce, Türkçe, Arapça, Fransızca, Almanca ve İtalyanca; uygulamada, klinik ekranında ve web sitesinde.']],
+        ar: [['هل هذا هو التطبيق الحقيقي لعيادة Elite Smile؟', 'لا، إنه عرض تجريبي. العيادات والعلاجات وأطباء الأسنان مأخوذة من elitesmile.nl، أما المرضى والمواعيد فهي خيالية.'], ['هل يعمل على كل هاتف؟', 'نعم: في متصفح iPhone وAndroid، وكتطبيق في المتاجر إذا رغبت Elite Smile في ذلك.'], ['هل تُرسَل البيانات إلى أي مكان؟', 'ليس في العرض التجريبي: يبقى كل شيء في متصفحك. النسخة الحقيقية تتصل بأمان بنظام العيادة.'], ['ما اللغات المتوفرة؟', 'الهولندية والإنجليزية والتركية والعربية والفرنسية والألمانية والإيطالية، في التطبيق وشاشة العيادة والموقع.']],
+        fr: [['Est-ce la vraie application d’Elite Smile ?', 'Non, une démo. Les cabinets, les traitements et les dentistes viennent d’elitesmile.nl ; les patients et l’agenda sont fictifs.'], ['Est-ce que cela fonctionne sur tous les téléphones ?', 'Oui : dans le navigateur sur iPhone et Android, et comme application dans les stores si Elite Smile le souhaite.'], ['Les données partent-elles quelque part ?', 'Pas dans la démo : tout reste dans votre navigateur. Une vraie version se connecte en toute sécurité au système du cabinet.'], ['Quelles langues ?', 'Néerlandais, anglais, turc, arabe, français, allemand et italien, partout dans l’application, l’écran du cabinet et le site.']],
+        de: [['Ist das die echte App von Elite Smile?', 'Nein, eine Demo. Praxen, Behandlungen und Zahnärzte stammen von elitesmile.nl; Patienten und Terminkalender sind erfunden.'], ['Funktioniert sie auf jedem Handy?', 'Ja: im Browser auf iPhone und Android, und als App in den Stores, wenn Elite Smile das möchte.'], ['Werden Daten irgendwohin gesendet?', 'In der Demo nicht: alles bleibt in Ihrem eigenen Browser. Eine echte Version verbindet sich sicher mit dem Praxissystem.'], ['Welche Sprachen?', 'Niederländisch, Englisch, Türkisch, Arabisch, Französisch, Deutsch und Italienisch, überall in der App, auf dem Praxisbildschirm und auf der Website.']],
+        it: [['È la vera app di Elite Smile?', 'No, è una demo. Gli studi, i trattamenti e i dentisti vengono da elitesmile.nl; i pazienti e l’agenda sono inventati.'], ['Funziona su ogni telefono?', 'Sì: nel browser di iPhone e Android, e come app negli store se Elite Smile lo desidera.'], ['I dati vengono inviati da qualche parte?', 'Non nella demo: tutto resta nel tuo browser. Una versione reale si collega in modo sicuro al sistema dello studio.'], ['Quali lingue?', 'Olandese, inglese, turco, arabo, francese, tedesco e italiano, ovunque nell’app, nello schermo dello studio e nel sito.']],
+        en: [['Is this Elite Smile’s real app?', 'No, a demo. The practices, treatments and dentists come from elitesmile.nl; the patients and the agenda are made up.'], ['Does it work on every phone?', 'Yes: in the browser on iPhone and Android, and as an app in the stores if Elite Smile wants.'], ['Does any data go anywhere?', 'Not in the demo: everything stays in your own browser. A real version connects securely to the practice system.'], ['Which languages?', 'Dutch, English, Turkish, Arabic, French, German and Italian, everywhere in the app, the panel and the website.']],
+      };
+      const LANG = window.LANG || 'nl';
+      const t = T[LANG] || T.nl;
+      for (const k of ['kicker', 'title', 'lead', 'back']) document.getElementById(k === 'back' ? 'back' : k).textContent = t[k];
+      document.getElementById('chapters-title').textContent = t.chapters;
+      document.getElementById('back').href = '../' + (LANG === 'nl' ? '' : '?lang=' + LANG);
+      const menu = document.getElementById('lang');
+      menu.value = LANG;
+      menu.addEventListener('change', () => {
+        const url = new URL(location.href);
+        url.searchParams.set('lang', menu.value);
+        location.replace(url.toString());
+      });
+      const video = document.getElementById('video');
+      // Subtitles: the chosen language shows; the others can be picked in the player.
+      for (const l of Object.keys(T)) {
+        const track = document.createElement('track');
+        track.kind = 'subtitles';
+        track.src = 'elite-smile-uitleg.' + l + '.vtt';
+        track.srclang = l;
+        track.label = menu.querySelector('option[value="' + l + '"]').textContent;
+        if (l === LANG) track.default = true;
+        video.appendChild(track);
+      }
+      const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+      fetch('chapters.json')
+        .then((r) => r.json())
+        .then((list) => {
+          const ol = document.getElementById('chapters');
+          const buttons = list.map((c) => {
+            const li = document.createElement('li');
+            const b = document.createElement('button');
+            b.innerHTML = '<time>' + fmt(c.start) + '</time><span></span>';
+            b.querySelector('span').textContent = (c.title && (c.title[LANG] || c.title.nl)) || c.id;
+            b.addEventListener('click', () => {
+              video.currentTime = c.start + 0.05;
+              video.play();
+            });
+            li.appendChild(b);
+            ol.appendChild(li);
+            return { b, start: c.start };
+          });
+          video.addEventListener('timeupdate', () => {
+            let on = 0;
+            buttons.forEach((x, i) => {
+              if (video.currentTime >= x.start) on = i;
+            });
+            buttons.forEach((x, i) => x.b.classList.toggle('on', i === on));
+          });
+        })
+        .catch(() => {});
+      const faq = document.getElementById('faq');
+      for (const [q, a] of FAQ[LANG] || FAQ.en) {
+        const d = document.createElement('div');
+        d.innerHTML = '<h3></h3><p></p>';
+        d.querySelector('h3').textContent = q;
+        d.querySelector('p').textContent = a;
+        faq.appendChild(d);
+      }
+    </script>
+  </body>
+</html>
