@@ -12,7 +12,7 @@ const t = (k, vars) => (nl[k] ?? k).replace(/\{(\w+)\}/g, (m, v) => (vars && v i
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
 /** Where GitHub Pages publishes the demo; Open Graph needs absolute addresses. */
-const SITE_URL = 'https://yilmazeyup.github.io/elite-smile-demo/website/';
+const SITE_URL = 'https://elitesmile.savastana.com/website/';
 
 // ------------------------------------------------------------------------------------------------- the tooth mark
 const brand = fs.readFileSync(here('../../packages/shared/src/brand.ts'), 'utf8');
